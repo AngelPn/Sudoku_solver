@@ -1,6 +1,6 @@
 OBJS= sudoku_solver.o
 CFLAGS = -g -Wall -I.
-PROGRAM= ex
+PROGRAM= solve_sudoku
 
 $(PROGRAM): clean $(OBJS)
 	g++ -g $(OBJS) -o $(PROGRAM)

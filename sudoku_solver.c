@@ -5,9 +5,9 @@
 #define N 9
 
 int boxStart(int x){
-    if (1 <= x  && x <= 3) return 1;
-    else if (4 <= x && x <= 6) return 4;
-    else return 7;
+    if (0 <= x  && x <= 2) return 0;
+    else if (3 <= x && x <= 5) return 3;
+    else return 6;
 }
 
 bool isSafe(int **grid, int i, int j, int num){
@@ -41,7 +41,7 @@ bool sudokuSolver(int ***grid){
 
                 for (int num = 1; num <= 9; num++){
                     if (isSafe((*grid), row, column, num)){
-                        (*grid)[row][column] = num++;
+                        (*grid)[row][column] = num;
                         if (sudokuSolver(grid))
                             return true;
                         else
@@ -49,7 +49,6 @@ bool sudokuSolver(int ***grid){
                     }
                         
                 }
-                return false;
             }
         }
     }

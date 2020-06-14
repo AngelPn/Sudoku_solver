@@ -37,7 +37,7 @@ bool sudokuSolver(int ***grid){
     for (int row = 0; row < 9; row++){
         for (int column = 0; column < 9; column++){
 
-            if (!(*grid)[row][column]){
+            if ((*grid)[row][column] == 0){
 
                 for (int num = 1; num <= 9; num++){
                     if (isSafe((*grid), row, column, num)){
@@ -46,9 +46,9 @@ bool sudokuSolver(int ***grid){
                             return true;
                         else
                             (*grid)[row][column] = 0;
-                    }
-                        
+                    }    
                 }
+                return false;
             }
         }
     }
@@ -71,11 +71,9 @@ int main(void){
                       {0, 0, 5, 2, 0, 6, 3, 0, 0}};
     printf("%d\n", array[8][4]);
 
-
-    int i,j;
     printf("INPUT\n");
-    for (i = 0; i < N; i++){
-        for (j = 0; j < N; j++){
+    for (int i = 0; i < N; i++){
+        for (int j = 0; j < N; j++){
             grid[i][j] = array[i][j];
             printf("%d\t", grid[i][j]);
         }
@@ -84,8 +82,8 @@ int main(void){
 
     if (sudokuSolver(&grid)){
         printf("OUTPUT\n");
-        for (i = 0; i < N; i++){
-            for (j = 0; j < N; j++){
+        for (int i = 0; i < N; i++){
+            for (int j = 0; j < N; j++){
                 printf("%d\t", grid[i][j]);
             }
             printf("\n"); 

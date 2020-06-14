@@ -1,25 +1,28 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 
 #define N 9
 
 int boxStart(int x){
-    if (1 <= x <= 3) return 1;
-    else if (4 <= x <= 6) return 4;
+    if (1 <= x  && x <= 3) return 1;
+    else if (4 <= x && x <= 6) return 4;
     else return 7;
 }
 
-bool isSafe(int grid[N][N], int i, int j){
+bool isSafe(int **grid, int i, int j){
     //Check the row
     for (int row = 0; row < 9; row++){
-        if (row != i)
+        if (row != i){
             if (grid[row][j] != grid[i][j]) continue;
+        }
         else return false;
     }
     //Check the column
     for (int column = 0; column < 9; column++){
-        if (column != j)
+        if (column != j){
             if (grid[i][column] != grid[i][j]) continue;
+        } 
         else return false;
     }
     //Check the box
@@ -27,22 +30,24 @@ bool isSafe(int grid[N][N], int i, int j){
     int boxStartCol = boxStart(j);
     for (int row = 0; row < 3; row++){
         for (int column = 0; column < 3; column++){
-            if (row + boxStartRow != i && column + boxStartCol != j)
+            if (row + boxStartRow != i && column + boxStartCol != j){
                 if (grid[row + boxStartRow][column + boxStartCol] != grid[i][j]) continue;
                 else return false;
+            }
+                
         }
     }
     return true;
 }
 
-bool sudokuSolver(int *grid[][]){
+bool sudokuSolver(int ***grid){
     int num = 1;
     for (int row = 0; row < 9; row++){
         for (int column = 0; column < 9; column++){
             if (!(*grid)[row][column]){
                 if (num == 9) num = 1;
                 (*grid)[row][column] = num++;
-                if (isSafe(grid, row, column))
+                if (isSafe((*grid), row, column))
                     if (sudokuSolver(grid)) return true;
             }
         }
@@ -50,9 +55,12 @@ bool sudokuSolver(int *grid[][]){
     return true;
 }
 
-
 int main(void){
-    int grid[N][N] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},   
+    //Malloc NxN array
+    int **grid = (int **)malloc(N*sizeof(int *));
+    for (int i = 0; i < N; i++)
+        grid[i] = (int *)malloc(N*sizeof(int));
+    int array[N][N] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},   
                       {5, 2, 0, 0, 0, 0, 0, 0, 0},   
                       {0, 8, 7, 0, 0, 0, 0, 3, 1},   
                       {0, 0, 3, 0, 1, 0, 0, 8, 0},   
@@ -61,6 +69,29 @@ int main(void){
                       {1, 3, 0, 0, 0, 0, 2, 5, 0},   
                       {0, 0, 0, 0, 0, 0, 0, 7, 4},   
                       {0, 0, 5, 2, 0, 6, 3, 0, 0}};
+    printf("%d\n", array[8][4]);
+
+
+    int i,j;
+    printf("INPUT\n");
+    for (i = 0; i < N; i++){
+        for (j = 0; j < N; j++){
+            grid[i][j] = array[i][j];
+            printf("%d\t", grid[i][j]);
+        }
+        printf("\n"); 
+    }
+
+    if (sudokuSolver(&grid)){
+        printf("OUTPUT\n");
+        for (i = 0; i < N; i++){
+            for (j = 0; j < N; j++){
+                printf("%d\t", grid[i][j]);
+            }
+            printf("\n"); 
+        }
+    }
+    else printf("There is no solution\n");
 
     return 0;
 }

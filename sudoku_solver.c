@@ -10,19 +10,15 @@ int boxStart(int x){
     else return 7;
 }
 
-bool isSafe(int **grid, int i, int j){
+bool isSafe(int **grid, int i, int j, int num){
     //Check the row
     for (int row = 0; row < 9; row++){
-        if (row != i){
-            if (grid[row][j] != grid[i][j]) continue;
-        }
+        if (grid[row][j] != num) continue;
         else return false;
     }
     //Check the column
     for (int column = 0; column < 9; column++){
-        if (column != j){
-            if (grid[i][column] != grid[i][j]) continue;
-        } 
+        if (grid[i][column] != num) continue;
         else return false;
     }
     //Check the box
@@ -30,25 +26,30 @@ bool isSafe(int **grid, int i, int j){
     int boxStartCol = boxStart(j);
     for (int row = 0; row < 3; row++){
         for (int column = 0; column < 3; column++){
-            if (row + boxStartRow != i && column + boxStartCol != j){
-                if (grid[row + boxStartRow][column + boxStartCol] != grid[i][j]) continue;
-                else return false;
-            }
-                
+            if (grid[row + boxStartRow][column + boxStartCol] != num) continue;
+            else return false;    
         }
     }
     return true;
 }
 
 bool sudokuSolver(int ***grid){
-    int num = 1;
     for (int row = 0; row < 9; row++){
         for (int column = 0; column < 9; column++){
+
             if (!(*grid)[row][column]){
-                if (num == 9) num = 1;
-                (*grid)[row][column] = num++;
-                if (isSafe((*grid), row, column))
-                    if (sudokuSolver(grid)) return true;
+
+                for (int num = 1; num <= 9; num++){
+                    if (isSafe((*grid), row, column, num)){
+                        (*grid)[row][column] = num++;
+                        if (sudokuSolver(grid))
+                            return true;
+                        else
+                            (*grid)[row][column] = 0;
+                    }
+                        
+                }
+                return false;
             }
         }
     }

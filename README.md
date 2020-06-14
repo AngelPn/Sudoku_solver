@@ -8,4 +8,4 @@ Input Sudoku in Sudoku.txt file.
 You can simply compile the program using Makefile:
 $ make
 To run the program:
-$ ./solve_sudoku < Soduku.txt
+$ ./solve_sudoku < Sudoku.txt

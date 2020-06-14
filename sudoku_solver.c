@@ -60,22 +60,17 @@ int main(void){
     int **grid = (int **)malloc(N*sizeof(int *));
     for (int i = 0; i < N; i++)
         grid[i] = (int *)malloc(N*sizeof(int));
-    int array[N][N] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},   
-                      {5, 2, 0, 0, 0, 0, 0, 0, 0},   
-                      {0, 8, 7, 0, 0, 0, 0, 3, 1},   
-                      {0, 0, 3, 0, 1, 0, 0, 8, 0},   
-                      {9, 0, 0, 8, 6, 3, 0, 0, 5},   
-                      {0, 5, 0, 0, 9, 0, 6, 0, 0},   
-                      {1, 3, 0, 0, 0, 0, 2, 5, 0},   
-                      {0, 0, 0, 0, 0, 0, 0, 7, 4},   
-                      {0, 0, 5, 2, 0, 6, 3, 0, 0}};
-    printf("%d\n", array[8][4]);
 
     printf("INPUT\n");
+    int ch = getchar();
     for (int i = 0; i < N; i++){
         for (int j = 0; j < N; j++){
-            grid[i][j] = array[i][j];
-            printf("%d\t", grid[i][j]);
+            if (ch != ' '){
+                grid[i][j] = ch-'0';
+                printf("%d\t", grid[i][j]);
+            }
+            ch = getchar();
+            ch = getchar();
         }
         printf("\n"); 
     }
